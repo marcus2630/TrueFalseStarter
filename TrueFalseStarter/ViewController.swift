@@ -19,12 +19,15 @@ class ViewController: UIViewController {
     
     var gameSound: SystemSoundID = 0
     
-    let trivia: [[String : String]] = [
-        ["Question": "Only female koalas can whistle", "Answer": "False"],
-        ["Question": "Blue whales are technically whales", "Answer": "True"],
-        ["Question": "Camels are cannibalistic", "Answer": "False"],
-        ["Question": "All ducks are birds", "Answer": "True"]
-    ]
+    let trivia = QuestionCollection
+//    let trivia: [[String : String]] = [
+//        QuizModel(question: "How are you?", correctAnswer: "False")
+//        ["Question": "Red is the mainstage at Defqon.1 Festival", "Answer": "True"],
+//        ["Question": "Jason Payne makes euphoric hardstyle", "Answer": "False"],
+//        ["Question": "Decibel Outdoor is held before Q-Base", "Answer": "True"],
+//        ["Question": "Qapital is a RAW event", "Answer": "True"],
+//        ["Question": "WiSH Outdoor has a hardcore stage", "Answer": "False"]
+//    ]
     
     @IBOutlet weak var questionField: UILabel!
     @IBOutlet weak var trueButton: UIButton!
@@ -39,6 +42,7 @@ class ViewController: UIViewController {
         playGameStartSound()
         displayQuestion()
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -48,7 +52,7 @@ class ViewController: UIViewController {
     func displayQuestion() {
         indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextIntWithUpperBound(trivia.count)
         let questionDictionary = trivia[indexOfSelectedQuestion]
-        questionField.text = questionDictionary["Question"]
+        questionField.text = questionDictionary.question
         playAgainButton.hidden = true
     }
     
@@ -69,11 +73,13 @@ class ViewController: UIViewController {
         questionsAsked += 1
         
         let selectedQuestionDict = trivia[indexOfSelectedQuestion]
-        let correctAnswer = selectedQuestionDict["Answer"]
+        let correctAnswer = selectedQuestionDict.correctAnswer
         
         if (sender === trueButton &&  correctAnswer == "True") || (sender === falseButton && correctAnswer == "False") {
+            playGameStartSound()
             correctQuestions += 1
-            questionField.text = "Correct!"
+            questionField.text = "Damn right!"
+            
         } else {
             questionField.text = "Sorry, wrong answer!"
         }
@@ -118,7 +124,7 @@ class ViewController: UIViewController {
     }
     
     func loadGameStartSound() {
-        let pathToSoundFile = NSBundle.mainBundle().pathForResource("GameSound", ofType: "wav")
+        let pathToSoundFile = NSBundle.mainBundle().pathForResource("frontlinerKick", ofType: "wav")
         let soundURL = NSURL(fileURLWithPath: pathToSoundFile!)
         AudioServicesCreateSystemSoundID(soundURL, &gameSound)
     }

@@ -11,33 +11,30 @@ import GameKit
 import AudioToolbox
 
 class ViewController: UIViewController {
-    
+    // Initializing some stuff
     let questionsPerRound = 4
     var questionsAsked = 0
     var correctQuestions = 0
     var indexOfSelectedQuestion = 0
     var trivia = QuestionCollection
-    
+    // Initializing sounds
     var gameend: SystemSoundID = 0
     var fail: SystemSoundID = 1
     var success: SystemSoundID = 2
-    
+    // Initializing used questions
     var usedQuestions = [Int]()
     
  
-    
+    // referencing the UI elements
     @IBOutlet weak var questionField: UILabel!
-    
     @IBOutlet weak var answer1: UIButton!
     @IBOutlet weak var answer2: UIButton!
     @IBOutlet weak var answer3: UIButton!
     @IBOutlet weak var answer4: UIButton!
-    
-    
     @IBOutlet weak var playAgainButton: UIButton!
     
 
-    override func viewDidLoad() {
+    override func viewDidLoad() { // on load do
         super.viewDidLoad()
         loadGameStartSound()
         // Start game
@@ -56,16 +53,20 @@ class ViewController: UIViewController {
 
     
     func displayQuestion() {
+        
         indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextIntWithUpperBound(trivia.count)
         
-        
+        // Check is all questions have been asked...
         if usedQuestions.count == trivia.count {
-            nextRound()
+            nextRound() // Yes? End game.
+        
+        // Has question been asked before?
         } else if usedQuestions.contains(indexOfSelectedQuestion) {
-            displayQuestion()
+            displayQuestion() // Yes? Display new one.
             
         } else {
             
+            // If none of the above, all set for display
             let questionDictionary = trivia[indexOfSelectedQuestion]
             questionField.text = questionDictionary.question
             playAgainButton.hidden = true
@@ -79,7 +80,6 @@ class ViewController: UIViewController {
             usedQuestions.append(indexOfSelectedQuestion)
             print("Debug question:  \(indexOfSelectedQuestion) used questions: \(usedQuestions)")
             }
-        
     }
     
     func displayScore() {
@@ -91,30 +91,32 @@ class ViewController: UIViewController {
         
         // Display play again button
         playAgainButton.hidden = false
-        
         questionField.text = "Way to go!\nYou got \(correctQuestions) out of \(questionsPerRound) correct!"
-        
     }
-    
+
+    // Check the answer
     @IBAction func checkAnswer(sender: UIButton) {
         // Increment the questions asked counter
         questionsAsked += 1
         
+        // Find the random question
         let selectedQuestionDict = trivia[indexOfSelectedQuestion]
+        
+        // Match the answer
         let correctAnswer = selectedQuestionDict.correctAnswer
         
-        
-        if (sender.titleLabel?.text == correctAnswer) {
+        // If match
+        if (sender.titleLabel?.text == correctAnswer) { // do awesome stuff
             playSuccess()
             correctQuestions += 1
             questionField.text = "Damn right!"
             
-        } else {
+        } else { // booo
             questionField.text = "Sorry, wrong answer!"
             playFail()
         }
-        
-        loadNextRoundWithDelay(seconds: 2)
+        // Move on
+        loadNextRoundWithDelay(seconds: 1)
     }
     
     func nextRound() {
@@ -157,6 +159,8 @@ class ViewController: UIViewController {
         }
     }
     
+    
+    // Not sure if this should actaully be placed in the model instead? It represents data after all
     func loadGameStartSound() {
         let pathToSoundFile = NSBundle.mainBundle().pathForResource("gameend", ofType: "wav")
         let soundURL = NSURL(fileURLWithPath: pathToSoundFile!)
@@ -174,7 +178,9 @@ class ViewController: UIViewController {
         AudioServicesCreateSystemSoundID(soundURL, &success)
     }
     
+    // ----
     
+    // Prepare sound functinos
     func playGameStartSound() {
         AudioServicesPlaySystemSound(gameend)
     }

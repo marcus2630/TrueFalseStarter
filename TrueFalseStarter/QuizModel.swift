@@ -9,15 +9,13 @@
 import Foundation
 
 
-struct QuizModel {
+struct QuizModel { // Quiz structure with question and answers
     let question: String
     let correctAnswer: String
     let answer1: String
     let answer2: String
     let answer3: String
     let answer4: String
-    
-    
     
     init(question: String, correctAnswer: String, answer1: String, answer2: String, answer3: String, answer4: String) {
         self.question = question
@@ -30,7 +28,7 @@ struct QuizModel {
     
 }
 
-var QuestionCollection = [
+var QuestionCollection = [ // Dictionary of QuizModels
     QuizModel(question: "Defqon.1 anthem 2016 was made by...", correctAnswer: "Bass Modulators", answer1:  "Coone", answer2:  "Bass Modulators", answer3:  "Justin Bieber", answer4: "Da Tweekaz" ),
     QuizModel(question: "The artist behind superhit \"Wolfpack\"...", correctAnswer: "Frequencerz", answer1:  "Headhunterz", answer2:  "Brennan Heart", answer3:  "D-Sturb", answer4: "Frequencerz" ),
     QuizModel(question: "Hardwell has made a hardstyle collaboration with...", correctAnswer: "Sephyx", answer1:  "Sephyx", answer2:  "Adrenalize", answer3:  "Sylence", answer4: "Atmozfears" ),

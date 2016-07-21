@@ -12,24 +12,28 @@ import Foundation
 struct QuizModel {
     let question: String
     let correctAnswer: String
-    let wrong1: String
-    let wrong2: String
-    let wrong3: String
+    let answer1: String
+    let answer2: String
+    let answer3: String
+    let answer4: String
     
     
     
-    init(question: String, correctAnswer: String, wrong1: String, wrong2: String, wrong3: String) {
+    init(question: String, correctAnswer: String, answer1: String, answer2: String, answer3: String, answer4: String) {
         self.question = question
         self.correctAnswer = correctAnswer
-        self.wrong1 = wrong1
-        self.wrong2 = wrong2
-        self.wrong3 = wrong3
+        self.answer1 = answer1
+        self.answer2 = answer2
+        self.answer3 = answer3
+        self.answer4 = answer4
     }
     
 }
 
 var QuestionCollection = [
-    QuizModel(question: "Defqon.1 anthem 2016 was done by:", correctAnswer: "Bass Modulators", wrong1:  "Coone", wrong2:  "Da Tweekaz", wrong3:  "Justin Bieber" ),
-    QuizModel(question: "The artist behind \"Wolfpack\"?", correctAnswer: "Frequencerz", wrong1: "Headhunterz", wrong2: "Brennan Heart", wrong3: "D-Sturb")
+    QuizModel(question: "Defqon.1 anthem 2016 was made by...", correctAnswer: "Bass Modulators", answer1:  "Coone", answer2:  "Bass Modulators", answer3:  "Justin Bieber", answer4: "Da Tweekaz" ),
+    QuizModel(question: "The artist behind superhit \"Wolfpack\"...", correctAnswer: "Frequencerz", answer1:  "Headhunterz", answer2:  "Brennan Heart", answer3:  "D-Sturb", answer4: "Frequencerz" ),
+    QuizModel(question: "Hardwell has made a hardstyle collaboration with...", correctAnswer: "Sephyx", answer1:  "Sephyx", answer2:  "Adrenalize", answer3:  "Sylence", answer4: "Atmozfears" ),
+    QuizModel(question: "Hardstyle is a genre originally influenced by Hardcore, Gabber and..", correctAnswer: "Trance", answer1:  "Dubstep", answer2:  "House", answer3:  "Trance", answer4: "Electro" )
 ]
                 

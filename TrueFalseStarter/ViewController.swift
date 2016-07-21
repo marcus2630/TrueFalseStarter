@@ -15,23 +15,20 @@ class ViewController: UIViewController {
     let questionsPerRound = 4
     var questionsAsked = 0
     var correctQuestions = 0
-    var indexOfSelectedQuestion: Int = 0
+    var indexOfSelectedQuestion = 0
     
     var gameSound: SystemSoundID = 0
     
     let trivia = QuestionCollection
-//    let trivia: [[String : String]] = [
-//        QuizModel(question: "How are you?", correctAnswer: "False")
-//        ["Question": "Red is the mainstage at Defqon.1 Festival", "Answer": "True"],
-//        ["Question": "Jason Payne makes euphoric hardstyle", "Answer": "False"],
-//        ["Question": "Decibel Outdoor is held before Q-Base", "Answer": "True"],
-//        ["Question": "Qapital is a RAW event", "Answer": "True"],
-//        ["Question": "WiSH Outdoor has a hardcore stage", "Answer": "False"]
-//    ]
     
     @IBOutlet weak var questionField: UILabel!
-    @IBOutlet weak var trueButton: UIButton!
-    @IBOutlet weak var falseButton: UIButton!
+    
+    @IBOutlet weak var answer1: UIButton!
+    @IBOutlet weak var answer2: UIButton!
+    @IBOutlet weak var answer3: UIButton!
+    @IBOutlet weak var answer4: UIButton!
+    
+    
     @IBOutlet weak var playAgainButton: UIButton!
     
 
@@ -49,17 +46,35 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+
+    func randomNumberNoRepeat() {
+        
+        var randomNumber = GKRandomSource.sharedRandom().nextIntWithUpperBound(range)
+        while previousNumber == randomNumber {
+            randomNumber = GKRandomSource.sharedRandom().nextIntWithUpperBound(range)
+        }
+        previousNumber = randomNumber
+        return randomNumber
+    }
+    
     func displayQuestion() {
-        indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextIntWithUpperBound(trivia.count)
+        indexOfSelectedQuestion = randomNumberNoRepeat(trivia.count)
         let questionDictionary = trivia[indexOfSelectedQuestion]
         questionField.text = questionDictionary.question
         playAgainButton.hidden = true
+        
+        answer1.setTitle(questionDictionary.answer1, forState: .Normal)
+        answer2.setTitle(questionDictionary.answer2, forState: .Normal)
+        answer3.setTitle(questionDictionary.answer3, forState: .Normal)
+        answer4.setTitle(questionDictionary.answer4, forState: .Normal)
     }
     
     func displayScore() {
         // Hide the answer buttons
-        trueButton.hidden = true
-        falseButton.hidden = true
+        answer1.hidden = true
+        answer2.hidden = true
+        answer3.hidden = true
+        answer4.hidden = true
         
         // Display play again button
         playAgainButton.hidden = false
@@ -75,7 +90,8 @@ class ViewController: UIViewController {
         let selectedQuestionDict = trivia[indexOfSelectedQuestion]
         let correctAnswer = selectedQuestionDict.correctAnswer
         
-        if (sender === trueButton &&  correctAnswer == "True") || (sender === falseButton && correctAnswer == "False") {
+        
+        if (sender.titleLabel?.text == correctAnswer) {
             playGameStartSound()
             correctQuestions += 1
             questionField.text = "Damn right!"
@@ -99,8 +115,10 @@ class ViewController: UIViewController {
     
     @IBAction func playAgain() {
         // Show the answer buttons
-        trueButton.hidden = false
-        falseButton.hidden = false
+        answer1.hidden = false
+        answer2.hidden = false
+        answer3.hidden = false
+        answer4.hidden = false
         
         questionsAsked = 0
         correctQuestions = 0

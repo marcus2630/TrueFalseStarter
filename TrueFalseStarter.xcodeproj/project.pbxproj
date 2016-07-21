@@ -14,6 +14,9 @@
 		97093D461C913506001275BC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97093D441C913506001275BC /* LaunchScreen.storyboard */; };
 		EEC128951D2FD6510078BCC5 /* frontlinerKick.wav in Resources */ = {isa = PBXBuildFile; fileRef = EEC128941D2FD6510078BCC5 /* frontlinerKick.wav */; };
 		EEC1289D1D3523CA0078BCC5 /* QuizModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC1289C1D3523CA0078BCC5 /* QuizModel.swift */; };
+		EEC128A11D41042E0078BCC5 /* fail.wav in Resources */ = {isa = PBXBuildFile; fileRef = EEC1289E1D41042E0078BCC5 /* fail.wav */; };
+		EEC128A21D41042E0078BCC5 /* gameend.wav in Resources */ = {isa = PBXBuildFile; fileRef = EEC1289F1D41042E0078BCC5 /* gameend.wav */; };
+		EEC128A31D41042E0078BCC5 /* success.wav in Resources */ = {isa = PBXBuildFile; fileRef = EEC128A01D41042E0078BCC5 /* success.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +30,9 @@
 		EEC128941D2FD6510078BCC5 /* frontlinerKick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = frontlinerKick.wav; sourceTree = "<group>"; };
 		EEC128961D2FDE440078BCC5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		EEC1289C1D3523CA0078BCC5 /* QuizModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizModel.swift; sourceTree = "<group>"; };
+		EEC1289E1D41042E0078BCC5 /* fail.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fail.wav; sourceTree = "<group>"; };
+		EEC1289F1D41042E0078BCC5 /* gameend.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gameend.wav; sourceTree = "<group>"; };
+		EEC128A01D41042E0078BCC5 /* success.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = success.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +74,9 @@
 				97093D441C913506001275BC /* LaunchScreen.storyboard */,
 				97093D471C913506001275BC /* Info.plist */,
 				EEC128941D2FD6510078BCC5 /* frontlinerKick.wav */,
+				EEC1289E1D41042E0078BCC5 /* fail.wav */,
+				EEC1289F1D41042E0078BCC5 /* gameend.wav */,
+				EEC128A01D41042E0078BCC5 /* success.wav */,
 			);
 			path = TrueFalseStarter;
 			sourceTree = "<group>";
@@ -131,9 +140,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEC128A11D41042E0078BCC5 /* fail.wav in Resources */,
 				EEC128951D2FD6510078BCC5 /* frontlinerKick.wav in Resources */,
 				97093D461C913506001275BC /* LaunchScreen.storyboard in Resources */,
+				EEC128A31D41042E0078BCC5 /* success.wav in Resources */,
 				97093D431C913506001275BC /* Assets.xcassets in Resources */,
+				EEC128A21D41042E0078BCC5 /* gameend.wav in Resources */,
 				97093D411C913506001275BC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

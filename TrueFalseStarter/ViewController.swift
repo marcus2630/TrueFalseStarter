@@ -17,7 +17,12 @@ class ViewController: UIViewController {
     var correctQuestions = 0
     var indexOfSelectedQuestion = 0
     var trivia = QuestionCollection
-    var gameSound: SystemSoundID = 0
+    
+    var gameend: SystemSoundID = 0
+    var fail: SystemSoundID = 1
+    var success: SystemSoundID = 2
+    
+    var usedQuestions = [Int]()
     
  
     
@@ -37,6 +42,8 @@ class ViewController: UIViewController {
         loadGameStartSound()
         // Start game
         playGameStartSound()
+        loadGameFailSound()
+        loadGameSuccessSound()
         displayQuestion()
     }
     
@@ -51,13 +58,14 @@ class ViewController: UIViewController {
     func displayQuestion() {
         indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextIntWithUpperBound(trivia.count)
         
-        var usedQuestions = [Int]()
-        if usedQuestions.count < trivia.count {
-            if usedQuestions.contains(indexOfSelectedQuestion) {
-                displayQuestion()
-                return
-            } else {
-            print(indexOfSelectedQuestion)
+        
+        if usedQuestions.count == trivia.count {
+            nextRound()
+        } else if usedQuestions.contains(indexOfSelectedQuestion) {
+            displayQuestion()
+            
+        } else {
+            
             let questionDictionary = trivia[indexOfSelectedQuestion]
             questionField.text = questionDictionary.question
             playAgainButton.hidden = true
@@ -67,10 +75,11 @@ class ViewController: UIViewController {
             answer3.setTitle(questionDictionary.answer3, forState: .Normal)
             answer4.setTitle(questionDictionary.answer4, forState: .Normal)
                 
-                // add question to used questions
-                usedQuestions.append(indexOfSelectedQuestion)
+            // add question to used questions
+            usedQuestions.append(indexOfSelectedQuestion)
+            print("Debug question:  \(indexOfSelectedQuestion) used questions: \(usedQuestions)")
             }
-        }
+        
     }
     
     func displayScore() {
@@ -96,12 +105,13 @@ class ViewController: UIViewController {
         
         
         if (sender.titleLabel?.text == correctAnswer) {
-            playGameStartSound()
+            playSuccess()
             correctQuestions += 1
             questionField.text = "Damn right!"
             
         } else {
             questionField.text = "Sorry, wrong answer!"
+            playFail()
         }
         
         loadNextRoundWithDelay(seconds: 2)
@@ -111,6 +121,8 @@ class ViewController: UIViewController {
         if questionsAsked == questionsPerRound {
             // Game is over
             displayScore()
+            playGameStartSound()
+            usedQuestions = [Int]()
         } else {
             // Continue game
             displayQuestion()
@@ -146,13 +158,33 @@ class ViewController: UIViewController {
     }
     
     func loadGameStartSound() {
-        let pathToSoundFile = NSBundle.mainBundle().pathForResource("frontlinerKick", ofType: "wav")
+        let pathToSoundFile = NSBundle.mainBundle().pathForResource("gameend", ofType: "wav")
         let soundURL = NSURL(fileURLWithPath: pathToSoundFile!)
-        AudioServicesCreateSystemSoundID(soundURL, &gameSound)
+        AudioServicesCreateSystemSoundID(soundURL, &gameend)
     }
     
-    func playGameStartSound() {
-        AudioServicesPlaySystemSound(gameSound)
+    func loadGameFailSound() {
+        let pathToSoundFile = NSBundle.mainBundle().pathForResource("fail", ofType: "wav")
+        let soundURL = NSURL(fileURLWithPath: pathToSoundFile!)
+        AudioServicesCreateSystemSoundID(soundURL, &fail)
     }
-}
+    func loadGameSuccessSound() {
+        let pathToSoundFile = NSBundle.mainBundle().pathForResource("success", ofType: "wav")
+        let soundURL = NSURL(fileURLWithPath: pathToSoundFile!)
+        AudioServicesCreateSystemSoundID(soundURL, &success)
+    }
+    
+    
+    func playGameStartSound() {
+        AudioServicesPlaySystemSound(gameend)
+    }
+    func playFail() {
+        AudioServicesPlaySystemSound(fail)
+    }
+    func playSuccess() {
+        AudioServicesPlaySystemSound(success)
+    }
 
+
+
+}

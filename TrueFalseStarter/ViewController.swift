@@ -16,10 +16,10 @@ class ViewController: UIViewController {
     var questionsAsked = 0
     var correctQuestions = 0
     var indexOfSelectedQuestion = 0
-    
+    var trivia = QuestionCollection
     var gameSound: SystemSoundID = 0
     
-    let trivia = QuestionCollection
+ 
     
     @IBOutlet weak var questionField: UILabel!
     
@@ -47,26 +47,30 @@ class ViewController: UIViewController {
     }
     
 
-    func randomNumberNoRepeat() {
-        
-        var randomNumber = GKRandomSource.sharedRandom().nextIntWithUpperBound(range)
-        while previousNumber == randomNumber {
-            randomNumber = GKRandomSource.sharedRandom().nextIntWithUpperBound(range)
-        }
-        previousNumber = randomNumber
-        return randomNumber
-    }
     
     func displayQuestion() {
-        indexOfSelectedQuestion = randomNumberNoRepeat(trivia.count)
-        let questionDictionary = trivia[indexOfSelectedQuestion]
-        questionField.text = questionDictionary.question
-        playAgainButton.hidden = true
+        indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextIntWithUpperBound(trivia.count)
         
-        answer1.setTitle(questionDictionary.answer1, forState: .Normal)
-        answer2.setTitle(questionDictionary.answer2, forState: .Normal)
-        answer3.setTitle(questionDictionary.answer3, forState: .Normal)
-        answer4.setTitle(questionDictionary.answer4, forState: .Normal)
+        var usedQuestions = [Int]()
+        if usedQuestions.count < trivia.count {
+            if usedQuestions.contains(indexOfSelectedQuestion) {
+                displayQuestion()
+                return
+            } else {
+            print(indexOfSelectedQuestion)
+            let questionDictionary = trivia[indexOfSelectedQuestion]
+            questionField.text = questionDictionary.question
+            playAgainButton.hidden = true
+        
+            answer1.setTitle(questionDictionary.answer1, forState: .Normal)
+            answer2.setTitle(questionDictionary.answer2, forState: .Normal)
+            answer3.setTitle(questionDictionary.answer3, forState: .Normal)
+            answer4.setTitle(questionDictionary.answer4, forState: .Normal)
+                
+                // add question to used questions
+                usedQuestions.append(indexOfSelectedQuestion)
+            }
+        }
     }
     
     func displayScore() {
@@ -119,9 +123,9 @@ class ViewController: UIViewController {
         answer2.hidden = false
         answer3.hidden = false
         answer4.hidden = false
-        
         questionsAsked = 0
         correctQuestions = 0
+        trivia = QuestionCollection
         nextRound()
     }
     

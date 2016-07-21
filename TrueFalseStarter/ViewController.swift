@@ -34,7 +34,17 @@ class ViewController: UIViewController {
     @IBOutlet weak var playAgainButton: UIButton!
     
 
+    
+    
     override func viewDidLoad() { // on load do
+        
+        // rounded borders
+        self.answer1.layer.cornerRadius = 10
+        self.answer2.layer.cornerRadius = 10
+        self.answer3.layer.cornerRadius = 10
+        self.answer4.layer.cornerRadius = 10
+        self.playAgainButton.layer.cornerRadius = 10
+        
         super.viewDidLoad()
         loadGameStartSound()
         // Start game
